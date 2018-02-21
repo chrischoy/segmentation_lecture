@@ -32,14 +32,25 @@ def sample_mm_gaussian(N=1000, K=10, mode_sigma=5):
 
 
 def load_image():
-  return np.array(Image.open('stanford.jpg'), dtype='float')[:, :, :3]
+  return np.array(Image.open('stanford.jpg'))[:, :, :3]
 
 
 def load_bilateral_image():
   im = load_image()
   H, W = im.shape[:2]
   y, x = np.mgrid[:H, :W]
-  return np.concatenate((y[..., np.newaxis], x[..., np.newaxis], im), 2), im
+  feat =np.concatenate(
+      (y[..., np.newaxis], x[..., np.newaxis], im), 2).astype('float')
+
+  # Flatten
+  feat = feat.reshape(-1, 5)
+
+  # Whiten the feature
+  feat -= np.mean(feat, 0)
+  feat /= np.sqrt(np.mean(feat ** 2, 0))
+
+  return feat, im
+
 
 if __name__ == '__main__':
   X = sample_mm_gaussian()

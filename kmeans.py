@@ -5,20 +5,17 @@ import utils
 import matplotlib.pyplot as plt
 
 
+# Get vectorized image
 feat, im = utils.load_bilateral_image()
 H, W = im.shape[:2]
-
-# Flatten
-feat = feat.reshape(-1, 5)
-
-# Whiten the feature
-feat -= np.mean(feat, 0)
-feat /= np.sqrt(np.mean(feat ** 2, 0))
 
 # K-means
 km = KMeans(10)
 km.fit(feat)
 labels = km.labels_
 
+plt.subplot(1, 2, 1)
+plt.imshow(im)
+plt.subplot(1, 2, 2)
 plt.imshow(labels.reshape(H, W))
 plt.show()
