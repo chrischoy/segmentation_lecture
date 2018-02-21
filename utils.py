@@ -32,7 +32,7 @@ def sample_mm_gaussian(N=1000, K=10, mode_sigma=5):
 
 
 def load_image(filename='stanford.jpg'):
-  im = np.array(Image.open(filename))
+  im = np.array(Image.open('images/' + filename))
   if im.ndim > 2 and im.shape[2] > 3:
     im = im[..., :3]
   return im
