@@ -38,20 +38,22 @@ def load_image(filename='stanford.jpg'):
   return im
 
 
+def whiten(im):
+  H, W, C = im.shape
+  # Flatten
+  whitened_im = im.reshape(-1, C).astype('float')
+  # Whiten the feature
+  whitened_im -= np.mean(whitened_im, 0)
+  whitened_im /= np.sqrt(np.mean(whitened_im ** 2, 0))
+  return whitened_im.reshape(H, W, C)
+
+
 def load_bilateral_image():
   im = load_image()
   H, W = im.shape[:2]
   y, x = np.mgrid[:H, :W]
   feat = np.concatenate(
       (y[..., np.newaxis], x[..., np.newaxis], im), 2).astype('float')
-
-  # Flatten
-  feat = feat.reshape(-1, 5)
-
-  # Whiten the feature
-  feat -= np.mean(feat, 0)
-  feat /= np.sqrt(np.mean(feat ** 2, 0))
-
   return feat, im
 
 

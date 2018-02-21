@@ -1,15 +1,7 @@
 import numpy as np
 import matplotlib.pyplot as plt
 
-from utils import load_image
-
-
-def whiten(im):
-  H, W = im.shape[:2]
-  whitened_im = im.reshape(-1, 3).astype('float')
-  whitened_im -= np.mean(whitened_im, 0)
-  whitened_im /= np.sqrt(np.mean(whitened_im ** 2, 0))
-  return whitened_im.reshape(H, W, 3)
+from utils import load_image, whiten
 
 
 def X(im, i, j):
@@ -66,8 +58,9 @@ for curr_iter in range(MAX_ITER + 1):
   if curr_iter % 50 == 0:
     print("Iter: {}\tLoss: {:.4}".format(curr_iter, loss))
 
-  if curr_iter % 500 == 0:
+  if curr_iter % 1000 == 0:
     pred = predict(whitened_im2, w)
-    pred = np.clip(pred, -1, 1)
+    pred[pred < 0] = -1
+    pred[pred > 0] = 1
     plt.imshow(pred)
     plt.show()

@@ -1,14 +1,15 @@
 from sklearn.cluster import MeanShift
 
-import utils
+from utils import load_bilateral_image, whiten
 import matplotlib.pyplot as plt
 
 # Get vectorized image
-feat, im = utils.load_bilateral_image()
+feat, im = load_bilateral_image()
 H, W = im.shape[:2]
+feat = whiten(feat)
 
 ms = MeanShift(bandwidth=1, bin_seeding=True)
-ms.fit(feat)
+ms.fit(feat.reshape(-1, feat.shape[2]))
 labels = ms.labels_
 
 plt.subplot(1, 2, 1)
