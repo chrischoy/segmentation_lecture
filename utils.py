@@ -39,7 +39,7 @@ def load_bilateral_image():
   im = load_image()
   H, W = im.shape[:2]
   y, x = np.mgrid[:H, :W]
-  feat =np.concatenate(
+  feat = np.concatenate(
       (y[..., np.newaxis], x[..., np.newaxis], im), 2).astype('float')
 
   # Flatten

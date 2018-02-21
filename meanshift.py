@@ -1,17 +1,15 @@
-from sklearn.cluster import KMeans
+from sklearn.cluster import MeanShift
 
 import utils
 import matplotlib.pyplot as plt
-
 
 # Get vectorized image
 feat, im = utils.load_bilateral_image()
 H, W = im.shape[:2]
 
-# K-means
-km = KMeans(10)
-km.fit(feat)
-labels = km.labels_
+ms = MeanShift(bandwidth=1, bin_seeding=True)
+ms.fit(feat)
+labels = ms.labels_
 
 plt.subplot(1, 2, 1)
 plt.imshow(im)
