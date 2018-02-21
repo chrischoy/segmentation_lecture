@@ -23,17 +23,20 @@ H, W = outline.shape
 # indicate whether the node has outline label
 label = outline[1:H-1, 1:W-1]
 
-def rbf_kernel(dist, sigma=3):
+
+def rbf_kernel(dist, sigma=0.05):
   return np.exp(- np.sum(dist ** 2, 2) / sigma)
+
 
 # Create pairwise conditional probability with nearest 4 neighbors
 curr_feat = feat[1:H-1, 1:W-1]
-top, bottom, left, right = np.zeros((H, W)), np.zeros((H, W)), np.zeros((H, W)), np.zeros((H, W))
+top, bottom, left, right = np.zeros((H, W)), np.zeros(
+    (H, W)), np.zeros((H, W)), np.zeros((H, W))
 
 top[1:H-1, 1:W-1]    = rbf_kernel(curr_feat - feat[0:H-2, 1:W-1])
 bottom[1:H-1, 1:W-1] = rbf_kernel(curr_feat - feat[2:H,   1:W-1])
 left[1:H-1, 1:W-1]   = rbf_kernel(curr_feat - feat[1:H-1, 0:W-2])
-right[1:H-1, 1:W-1]  = rbf_kernel(curr_feat - feat[1:H-1, 2:W  ])
+right[1:H-1, 1:W-1]  = rbf_kernel(curr_feat - feat[1:H-1, 2:W])
 
 # Create unary potential
 logit = np.zeros((H, W, N_LABEL))
