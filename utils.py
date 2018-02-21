@@ -31,8 +31,11 @@ def sample_mm_gaussian(N=1000, K=10, mode_sigma=5):
   return np.concatenate(xs, 0)
 
 
-def load_image():
-  return np.array(Image.open('stanford.jpg'))[:, :, :3]
+def load_image(filename='stanford.jpg'):
+  im = np.array(Image.open(filename))
+  if im.ndim > 2 and im.shape[2] > 3:
+    im = im[..., :3]
+  return im
 
 
 def load_bilateral_image():
