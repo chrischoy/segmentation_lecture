@@ -16,6 +16,8 @@ labels = km.labels_
 
 plt.subplot(1, 2, 1)
 plt.imshow(im)
+plt.axis('off')
 plt.subplot(1, 2, 2)
 plt.imshow(labels.reshape(H, W))
+plt.axis('off')
 plt.show()

@@ -44,7 +44,7 @@ whitened_im = whiten(im)
 whitened_im2 = whiten(im2)
 
 # Define weight
-w = np.random.rand(27)
+w = np.random.rand(27) / 27
 
 for curr_iter in range(MAX_ITER + 1):
   # Get random image patch
@@ -60,7 +60,7 @@ for curr_iter in range(MAX_ITER + 1):
 
   if curr_iter % 1000 == 0:
     pred = predict(whitened_im2, w)
-    pred[pred < 0] = -1
-    pred[pred > 0] = 1
     plt.imshow(pred)
+    plt.clim(-1, 1)
+    plt.axis('off')
     plt.show()

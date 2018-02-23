@@ -9,8 +9,10 @@ outline = load_image('cat1_outline.png')
 # outline consists of 3 values 0, 1, 255. We will igure the value 255.
 plt.subplot(1, 2, 1)
 plt.imshow(im)
+plt.axis('off')
 plt.subplot(1, 2, 2)
 plt.imshow(outline[..., np.newaxis] * im)
+plt.axis('off')
 # plt.show()
 
 # Create a grid CRF
@@ -71,7 +73,8 @@ for curr_iter in range(MAX_ITER):
     p = z / np.sum(z, 2, keepdims=True)
     plt.subplot(1, 2, 1)
     plt.imshow(im)
+    plt.axis('off')
     plt.subplot(1, 2, 2)
     plt.imshow(p[..., 0])
-    plt.colorbar()
+    plt.axis('off')
     plt.show()
